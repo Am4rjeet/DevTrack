@@ -1,173 +1,166 @@
-# DEVTRACK
+# DevTrack 🚀
 
-Production-ready MERN SaaS for developer progress tracking — coding hours, DSA practice, goals, streaks, XP, leaderboard, GitHub stats, and analytics.
+A full-stack developer productivity platform built to help developers track progress, stay consistent, and showcase their growth.
 
-## Stack
+DevTrack combines coding activity tracking, goal management, GitHub integration, analytics, streaks, XP, and leaderboards into a single dashboard designed for developers.
 
-| Layer | Tech |
-|-------|------|
-| Frontend | React 19, Vite, Tailwind, TanStack Query, Recharts |
-| Backend | Node.js, Express, MongoDB, JWT (httpOnly cookies), Zod |
-| Auth | Register/login, refresh rotation, email verification, CSRF |
-| Deploy | Vercel (client) + Render (API) + MongoDB Atlas |
+## Features
 
-## Project structure
+* Secure Authentication (JWT + HttpOnly Cookies)
+* Email Verification
+* Forgot Password & Password Reset
+* GitHub OAuth Integration
+* GitHub Stats & Repository Insights
+* Progress Tracking
+* Goal Management
+* Developer Analytics Dashboard
+* XP & Gamification System
+* Streak Tracking
+* Public Developer Profiles
+* Leaderboards
+* CSRF Protection
+* Rate Limiting & Bot Protection
 
-```
-DEvtrack-2/
-├── client/          # React SPA
-├── server/          # Express API
-├── .github/         # CI workflows
-├── render.yaml      # Render blueprint (API)
-└── scripts/         # Utility scripts
-```
+## Tech Stack
 
-## Local development
+### Frontend
 
-### Prerequisites
+* React
+* Vite
+* Tailwind CSS
+* TanStack Query
+* Recharts
 
-- Node.js 20+
-- MongoDB (local or [MongoDB Atlas](https://www.mongodb.com/atlas) free tier)
+### Backend
 
-### Setup
+* Node.js
+* Express.js
+* MongoDB
+* Mongoose
+* JWT Authentication
+* Zod Validation
+* Nodemailer
+
+### Deployment
+
+* Vercel (Frontend)
+* Render (Backend)
+* MongoDB Atlas
+
+## Project Structure
 
 ```bash
-# Install dependencies (monorepo workspaces)
+client/     # Frontend Application
+server/     # Backend API
+scripts/    # Utility Scripts
+.github/    # CI/CD Workflows
+```
+
+## Getting Started
+
+### Clone Repository
+
+```bash
+git clone https://github.com/Am4rjeet/DevTrack.git
+cd DevTrack
+```
+
+### Install Dependencies
+
+```bash
 npm install
-
-# Server env
-cp server/.env.example server/.env
-# Edit server/.env — at minimum set MONGODB_URI and secrets
-
-# Generate secrets (optional)
-node scripts/generate-secrets.js
 ```
 
-### Run
+### Environment Setup
+
+Create:
 
 ```bash
-# Terminal 1 — API (http://localhost:5000)
-npm run dev:server
+server/.env
+```
 
-# Terminal 2 — Frontend (http://localhost:5173)
+using:
+
+```bash
+server/.env.example
+```
+
+### Start Development Server
+
+Backend:
+
+```bash
+npm run dev:server
+```
+
+Frontend:
+
+```bash
 npm run dev:client
 ```
 
-The Vite dev server proxies `/api` to the backend. No `VITE_API_URL` needed locally.
+## Environment Variables
 
-### Test
+Required:
+
+```env
+MONGODB_URI=
+JWT_ACCESS_SECRET=
+JWT_REFRESH_SECRET=
+CSRF_SECRET=
+CLIENT_URL=
+ENCRYPTION_KEY=
+```
+
+Optional:
+
+```env
+EMAIL_USER=
+EMAIL_PASSWORD=
+
+GITHUB_CLIENT_ID=
+GITHUB_CLIENT_SECRET=
+GITHUB_TOKEN=
+```
+
+## Testing
 
 ```bash
-npm test              # server + client
-npm run test:server   # Jest (integration tests need MongoDB)
-npm run test:client   # Vitest
+npm test
+npm run test:server
+npm run test:client
 ```
 
-## Production deployment
+## Deployment
 
-### Architecture
+### Frontend
 
-```
-Browser → Vercel (SPA)  ──HTTPS──►  Render (API)  ──►  MongoDB Atlas
-              │                              │
-         VITE_API_URL                   MONGODB_URI
-```
+Deploy on Vercel
 
-### 1. MongoDB Atlas
+### Backend
 
-1. Create a free M0 cluster.
-2. Database Access → create a DB user.
-3. Network Access → allow `0.0.0.0/0` (or Render's IPs).
-4. Copy the connection string → `MONGODB_URI`.
+Deploy on Render
 
-### 2. API on Render
+### Database
 
-1. Push this repo to GitHub.
-2. [Render Dashboard](https://dashboard.render.com) → **New** → **Blueprint** → connect repo.
-3. Render reads `render.yaml` and creates the `devtrack-api` web service.
-4. Set environment variables in the Render dashboard:
+MongoDB Atlas
 
-| Variable | Value |
-|----------|-------|
-| `NODE_ENV` | `production` |
-| `MONGODB_URI` | Atlas connection string |
-| `JWT_ACCESS_SECRET` | 64+ char random hex |
-| `JWT_REFRESH_SECRET` | 64+ char random hex |
-| `CSRF_SECRET` | 64+ char random hex |
-| `ENCRYPTION_KEY` | 32-byte hex (64 chars) |
-| `CLIENT_URL` | `https://your-app.vercel.app` (no trailing slash) |
-| `COOKIE_SECURE` | `true` |
-| `COOKIE_DOMAIN` | leave empty (cross-origin cookies) |
-| `GITHUB_OAUTH_CALLBACK_URL` | `https://devtrack-api.onrender.com/api/v1/github/oauth/callback` |
-| `EMAIL_*` | SMTP credentials (optional) |
+## Screenshots
 
-Generate secrets: `node scripts/generate-secrets.js`
+Add screenshots here after deployment.
 
-5. Deploy → note your API URL, e.g. `https://devtrack-api.onrender.com`.
-6. Verify: `GET https://devtrack-api.onrender.com/api/v1/health`
+## Future Improvements
 
-### 3. Frontend on Vercel
+* AI Learning Insights
+* Coding Streak Predictions
+* Team Workspaces
+* Project Portfolio Integration
+* Advanced Analytics
 
-1. [Vercel](https://vercel.com) → **Import** Git repo.
-2. **Root Directory**: `client`
-3. **Framework Preset**: Vite
-4. Environment variable:
+## Author
 
-| Variable | Value |
-|----------|-------|
-| `VITE_API_URL` | `https://devtrack-api.onrender.com/api/v1` |
-
-5. Deploy → note your frontend URL.
-6. Update Render `CLIENT_URL` to match the Vercel URL and redeploy the API.
-
-### 4. GitHub OAuth (optional)
-
-1. [GitHub Developer Settings](https://github.com/settings/developers) → **New OAuth App**
-2. Homepage URL: your Vercel URL
-3. Callback URL: `https://<api-host>/api/v1/github/oauth/callback`
-4. Set `GITHUB_CLIENT_ID`, `GITHUB_CLIENT_SECRET`, `GITHUB_OAUTH_CALLBACK_URL` on Render.
-
-### 5. Custom domain (optional)
-
-If both app and API share a parent domain (e.g. `app.devtrack.com` + `api.devtrack.com`):
-
-- Set `COOKIE_DOMAIN=.devtrack.com`
-- Update `CLIENT_URL` and `VITE_API_URL` to custom URLs
-- Configure DNS + SSL in Vercel and Render
-
-## Environment reference
-
-See `server/.env.example` and `client/.env.example` for all variables.
-
-**Production checklist**
-
-- [ ] `COOKIE_SECURE=true`
-- [ ] `CLIENT_URL` matches exact Vercel origin (scheme + host, no path)
-- [ ] `VITE_API_URL` points to `/api/v1` on the API host
-- [ ] MongoDB Atlas allows Render connections
-- [ ] GitHub OAuth callback uses production API URL
-- [ ] Secrets are unique per environment (never reuse dev secrets)
-
-## API overview
-
-| Prefix | Description |
-|--------|-------------|
-| `/api/v1/auth` | Authentication + CSRF |
-| `/api/v1/progress` | Progress entries |
-| `/api/v1/goals` | Goals & milestones |
-| `/api/v1/analytics` | Charts & heatmap |
-| `/api/v1/dashboard` | Combined dashboard |
-| `/api/v1/leaderboard` | Rankings |
-| `/api/v1/github` | GitHub integration |
-| `/api/v1/users/:username` | Public profiles |
-
-## CI
-
-GitHub Actions run on push/PR:
-
-- **Server CI** — Jest with MongoDB service container
-- **Client CI** — Vite build + Vitest
+Amarjeet
 
 ## License
 
-Private — all rights reserved.
+This project is available for educational and portfolio purposes.
