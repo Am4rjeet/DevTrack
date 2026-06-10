@@ -1,6 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
 import { Link } from 'react-router-dom';
-import { motion } from 'framer-motion';
 import { Flame, Star, Target, Trophy, Zap } from 'lucide-react';
 import { formatDistanceToNow } from 'date-fns';
 import { dashboardApi } from '@/features/dashboard/api/dashboardApi';
@@ -16,7 +15,7 @@ import { Progress } from '@/components/ui/progress';
 import { Button } from '@/components/ui/button';
 
 export default function DashboardPage() {
-  const { data, isLoading } = useQuery({
+  const { data, isLoading, isError, refetch } = useQuery({
     queryKey: ['dashboard'],
     queryFn: async () => {
       const { data: res } = await dashboardApi.get();
@@ -25,7 +24,18 @@ export default function DashboardPage() {
   });
 
   if (isLoading) return <LoadingSpinner className="py-20" size="lg" />;
-  if (!data) return null;
+  if (isError || !data) {
+    return (
+      <div className="flex flex-col items-center justify-center gap-4 py-20 text-center">
+        <p className="text-muted-foreground">Couldn&apos;t load your dashboard.</p>
+        <Button variant="outline" onClick={() => refetch()}>
+          Try again
+        </Button>
+      </div>
+    );
+  }
+
+  const isNewUser = !data.recentActivity?.length && (data.user?.totalXP ?? 0) === 0;
 
   const weeklyChart = data.weeklyProgress?.byDay?.map((d) => ({
     label: d.date?.slice(5),
@@ -33,16 +43,39 @@ export default function DashboardPage() {
   }));
 
   return (
-    <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-6">
+    <div className="space-y-6">
       <PageHeader
         title={`Welcome back, ${data.user?.displayName || data.user?.username}`}
-        description="Here's your developer progress overview"
+        description="This week at a glance"
         action={
           <Button asChild>
             <Link to="/progress">Log activity</Link>
           </Button>
         }
       />
+
+      {isNewUser && (
+        <Card className="border-primary/20 bg-primary/5">
+          <CardContent className="flex flex-col gap-4 p-6 sm:flex-row sm:items-center sm:justify-between">
+            <div>
+              <p className="font-medium">Get started</p>
+              <p className="text-sm text-muted-foreground">
+                Log your first session to start earning XP and building your streak.
+              </p>
+            </div>
+            <div className="flex shrink-0 gap-2">
+              <Button asChild>
+                <Link to="/progress">Log activity</Link>
+              </Button>
+              {!data.github?.connected && (
+                <Button variant="outline" asChild>
+                  <Link to="/github">Connect GitHub</Link>
+                </Button>
+              )}
+            </div>
+          </CardContent>
+        </Card>
+      )}
 
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
         <StatCard title="Total XP" value={data.user?.totalXP?.toLocaleString()} icon={Star} subtitle={`Level ${data.user?.level}`} />
@@ -52,7 +85,7 @@ export default function DashboardPage() {
           title="Leaderboard"
           value={data.leaderboardRank?.rank ? `#${data.leaderboardRank.rank}` : '—'}
           icon={Trophy}
-          subtitle={data.leaderboardRank?.inTop100 ? 'Top 100 this week' : 'Keep grinding'}
+          subtitle={data.leaderboardRank?.inTop100 ? 'Top 100 this week' : 'Log more to rank'}
         />
       </div>
 
@@ -107,7 +140,7 @@ export default function DashboardPage() {
                 </div>
               ))
             ) : (
-              <p className="text-sm text-muted-foreground">No activity yet. Log your first session!</p>
+              <p className="text-sm text-muted-foreground">Nothing logged this week.</p>
             )}
           </CardContent>
         </Card>
@@ -121,7 +154,9 @@ export default function DashboardPage() {
           <CardContent className="flex flex-wrap gap-3">
             {data.recentAchievements.map((a) => (
               <div key={a._id} className="flex items-center gap-2 rounded-lg border px-3 py-2">
-                <span className="text-xl">{a.icon}</span>
+                <span className="flex h-8 w-8 items-center justify-center rounded-md bg-primary/10 font-mono text-sm font-bold text-primary">
+                  {a.icon}
+                </span>
                 <div>
                   <p className="text-sm font-medium">{a.title}</p>
                   <p className="text-xs text-muted-foreground">
@@ -133,6 +168,6 @@ export default function DashboardPage() {
           </CardContent>
         </Card>
       )}
-    </motion.div>
+    </div>
   );
 }

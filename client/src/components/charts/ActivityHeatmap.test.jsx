@@ -24,7 +24,7 @@ describe('ActivityHeatmap', () => {
   it('shows empty state when no activity', () => {
     render(<ActivityHeatmap grid={[]} />);
 
-    expect(screen.getByText(/No activity yet/i)).toBeInTheDocument();
+    expect(screen.getByText(/No data for this period/i)).toBeInTheDocument();
   });
 
   it('renders heatmap cells for activity data', () => {

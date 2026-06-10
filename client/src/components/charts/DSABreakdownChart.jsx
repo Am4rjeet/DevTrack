@@ -17,7 +17,7 @@ export function DSABreakdownChart({ data = [] }) {
   if (!chartData.length) {
     return (
       <div className="flex h-[220px] items-center justify-center text-sm text-muted-foreground">
-        No DSA problems logged yet
+        No DSA entries
       </div>
     );
   }

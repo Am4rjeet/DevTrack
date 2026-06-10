@@ -3,11 +3,6 @@ import env from './env.js';
 export const ACCESS_TOKEN_COOKIE = 'access_token';
 export const REFRESH_TOKEN_COOKIE = 'refresh_token';
 
-/**
- * Shared cookie flags for API auth + CSRF.
- * Cross-origin production (Vercel + Render) requires Secure + SameSite=None.
- * Leave COOKIE_DOMAIN empty so cookies bind to the API host.
- */
 export const getBaseCookieOptions = () => {
   const secure = env.COOKIE_SECURE;
 

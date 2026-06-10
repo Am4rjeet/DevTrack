@@ -64,7 +64,7 @@ export default function ProgressPage() {
     <div className="space-y-6">
       <PageHeader
         title="Progress"
-        description="Log coding hours, DSA problems, and learning sessions"
+        description="Coding, DSA, projects — log it here"
         action={
           <Button onClick={() => setOpen(true)}>
             <Plus className="mr-2 h-4 w-4" />
@@ -88,8 +88,9 @@ export default function ProgressPage() {
         <LoadingSpinner className="py-12" />
       ) : entries.length === 0 ? (
         <Card>
-          <CardContent className="py-12 text-center text-muted-foreground">
-            No entries yet. Click &quot;Log activity&quot; to get started.
+          <CardContent className="flex flex-col items-center gap-3 py-12 text-center">
+            <p className="text-muted-foreground">Nothing logged yet.</p>
+            <Button onClick={() => setOpen(true)}>Log your first session</Button>
           </CardContent>
         </Card>
       ) : (

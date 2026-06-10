@@ -1,9 +1,10 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
 import { ExternalLink, Github, RefreshCw, Unlink, Users, BookOpen, GitCommit } from 'lucide-react';
 import { githubApi } from '@/features/github/api/githubApi';
-import { getErrorMessage } from '@/lib/api';
+import { getApiUrl, getErrorMessage } from '@/lib/api';
 import { PageHeader } from '@/components/common/PageHeader';
 import { LoadingSpinner } from '@/components/common/LoadingSpinner';
 import { Button } from '@/components/ui/button';
@@ -16,7 +17,20 @@ import { formatDistanceToNow } from 'date-fns';
 
 export default function GitHubPage() {
   const queryClient = useQueryClient();
+  const [searchParams, setSearchParams] = useSearchParams();
   const [username, setUsername] = useState('');
+
+  useEffect(() => {
+    if (searchParams.get('success') === 'true') {
+      toast.success('GitHub connected!');
+      setSearchParams({}, { replace: true });
+    }
+    const error = searchParams.get('error');
+    if (error) {
+      toast.error(`GitHub connection failed: ${error}`);
+      setSearchParams({}, { replace: true });
+    }
+  }, [searchParams, setSearchParams]);
 
   const { data: status } = useQuery({
     queryKey: ['github', 'status'],
@@ -69,7 +83,7 @@ export default function GitHubPage() {
     <div className="space-y-6">
       <PageHeader
         title="GitHub"
-        description="Connect your GitHub profile and showcase your work"
+        description="Pull in repos, commits, and profile stats"
         action={
           status?.connected && (
             <div className="flex gap-2">
@@ -131,17 +145,12 @@ export default function GitHubPage() {
                   </div>
                 </div>
                 <Button variant="outline" className="w-full" asChild>
-                  <a href="/api/v1/github/oauth">
+                  <a href={getApiUrl('/github/oauth')}>
                     <Github className="mr-2 h-4 w-4" />
                     Connect with GitHub OAuth
                   </a>
                 </Button>
               </>
-            )}
-            {!status?.serverTokenConfigured && (
-              <p className="text-xs text-amber-500">
-                Tip: Add GITHUB_TOKEN to server .env for public API access, or use OAuth.
-              </p>
             )}
           </CardContent>
         </Card>

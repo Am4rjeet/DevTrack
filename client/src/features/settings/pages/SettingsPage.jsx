@@ -1,6 +1,7 @@
 import { useState } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { toast } from 'sonner';
+import { Github } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
 import { authApi } from '@/features/auth/api/authApi';
 import { getErrorMessage } from '@/lib/api';
@@ -8,16 +9,11 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Separator } from '@/components/ui/separator';
 
 export default function SettingsPage() {
   const { user } = useAuth();
-  const [searchParams] = useSearchParams();
   const [loading, setLoading] = useState(false);
   const [passwords, setPasswords] = useState({ currentPassword: '', newPassword: '' });
-
-  const githubSuccess = searchParams.get('success') === 'true';
-  const githubError = searchParams.get('error');
 
   const handleChangePassword = async (e) => {
     e.preventDefault();
@@ -48,17 +44,6 @@ export default function SettingsPage() {
         <h1 className="text-2xl font-bold tracking-tight">Settings</h1>
         <p className="text-muted-foreground">Manage your account and preferences</p>
       </div>
-
-      {githubSuccess && (
-        <div className="rounded-md border border-green-500/30 bg-green-500/10 px-4 py-3 text-sm text-green-400">
-          GitHub account connected successfully!
-        </div>
-      )}
-      {githubError && (
-        <div className="rounded-md border border-destructive/30 bg-destructive/10 px-4 py-3 text-sm text-destructive">
-          GitHub connection failed: {githubError}
-        </div>
-      )}
 
       <Card>
         <CardHeader>
@@ -126,15 +111,14 @@ export default function SettingsPage() {
       <Card>
         <CardHeader>
           <CardTitle>GitHub</CardTitle>
-          <CardDescription>Connect your GitHub profile</CardDescription>
+          <CardDescription>Connect your profile to show repos and activity</CardDescription>
         </CardHeader>
-        <CardContent className="space-y-3">
-          <p className="text-sm text-muted-foreground">
-            Full GitHub UI in Phase 8. For now, use the API or OAuth redirect:
-          </p>
-          <Separator />
+        <CardContent>
           <Button asChild variant="outline">
-            <a href="/api/v1/github/oauth">Connect via GitHub OAuth</a>
+            <Link to="/github">
+              <Github className="mr-2 h-4 w-4" />
+              Manage GitHub connection
+            </Link>
           </Button>
         </CardContent>
       </Card>

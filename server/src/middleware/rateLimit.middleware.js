@@ -17,7 +17,6 @@ export const globalRateLimiter = rateLimit({
   ),
 });
 
-/** General auth endpoints (refresh, reset password, etc.) */
 export const authRateLimiter = rateLimit({
   windowMs: env.RATE_LIMIT_WINDOW_MS,
   max: env.AUTH_RATE_LIMIT_MAX,
@@ -30,7 +29,6 @@ export const authRateLimiter = rateLimit({
   ),
 });
 
-/** Strict: max few signups per IP per hour — stops bot floods */
 export const registerRateLimiter = rateLimit({
   windowMs: env.REGISTER_RATE_LIMIT_WINDOW_MS,
   max: env.REGISTER_RATE_LIMIT_MAX,
@@ -43,7 +41,6 @@ export const registerRateLimiter = rateLimit({
   ),
 });
 
-/** Login brute-force protection */
 export const loginRateLimiter = rateLimit({
   windowMs: env.RATE_LIMIT_WINDOW_MS,
   max: env.LOGIN_RATE_LIMIT_MAX,

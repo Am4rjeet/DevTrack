@@ -22,7 +22,7 @@ export function HoursChart({ data = [] }) {
   if (!data.length) {
     return (
       <div className="flex h-[220px] items-center justify-center text-sm text-muted-foreground">
-        No activity data yet
+        No hours logged
       </div>
     );
   }

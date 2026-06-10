@@ -11,10 +11,6 @@ const generateCsrfToken = () => crypto.randomBytes(32).toString('hex');
 const hashToken = (token) =>
   crypto.createHmac('sha256', env.CSRF_SECRET).update(token).digest('hex');
 
-/**
- * Double-submit cookie CSRF protection.
- * Safe methods receive a CSRF token cookie; state-changing requests must echo it in a header.
- */
 const csrfProtection = (req, res, next) => {
   const safeMethods = ['GET', 'HEAD', 'OPTIONS'];
 

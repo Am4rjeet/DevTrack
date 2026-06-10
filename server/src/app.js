@@ -16,7 +16,6 @@ import apiRoutes from './routes/index.js';
 
 const app = express();
 
-// Trust proxy when behind Render/Railway/Vercel reverse proxy
 if (env.NODE_ENV === 'production') {
   app.set('trust proxy', 1);
 }
@@ -38,13 +37,12 @@ if (isDevelopment) {
   app.use(morgan('combined'));
 }
 
-// CSRF protection for all API routes
 app.use('/api', csrfProtection);
 
 app.get('/', (_req, res) => {
   res.json({
     success: true,
-    message: 'DEVTRACK API',
+    message: 'DevTrack API',
     version: '1.0.0',
     docs: '/api/v1/health',
   });

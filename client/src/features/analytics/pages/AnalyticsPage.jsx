@@ -61,7 +61,7 @@ export default function AnalyticsPage() {
     <div className="space-y-6">
       <PageHeader
         title="Analytics"
-        description="Deep dive into your coding patterns and growth"
+        description="Hours, XP, and DSA breakdown over time"
         action={
           <Select value={days} onChange={(e) => setDays(Number(e.target.value))} className="w-36">
             <option value={7}>Last 7 days</option>
@@ -110,7 +110,7 @@ export default function AnalyticsPage() {
         </ChartCard>
       </div>
 
-      <ChartCard title="Contribution heatmap" description="Last 52 weeks — GitHub style">
+      <ChartCard title="Activity heatmap" description="Last 52 weeks">
         <ActivityHeatmap grid={heatmapData?.grid} weeks={52} />
       </ChartCard>
     </div>

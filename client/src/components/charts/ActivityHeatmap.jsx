@@ -35,7 +35,7 @@ export function ActivityHeatmap({ grid = [], weeks = 12 }) {
   if (!cells.length) {
     return (
       <div className="flex h-32 items-center justify-center text-sm text-muted-foreground">
-        No activity yet — log your first session!
+        No data for this period yet
       </div>
     );
   }

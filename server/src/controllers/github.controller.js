@@ -48,7 +48,6 @@ const getStatus = asyncHandler(async (req, res) => {
     data: {
       ...result,
       oauthAvailable: githubService.isOAuthConfigured(),
-      serverTokenConfigured: Boolean(env.GITHUB_TOKEN),
     },
   });
 });
@@ -61,10 +60,10 @@ const startOAuth = asyncHandler(async (req, res) => {
 const oauthCallback = asyncHandler(async (req, res) => {
   try {
     await githubService.handleOAuthCallback(req.query.code, req.query.state);
-    res.redirect(`${env.CLIENT_URL}/settings/github?success=true`);
+    res.redirect(`${env.CLIENT_URL}/github?success=true`);
   } catch (error) {
     const message = error instanceof AppError ? error.code : 'OAUTH_FAILED';
-    res.redirect(`${env.CLIENT_URL}/settings/github?error=${message}`);
+    res.redirect(`${env.CLIENT_URL}/github?error=${message}`);
   }
 });
 

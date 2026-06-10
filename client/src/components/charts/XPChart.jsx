@@ -4,7 +4,7 @@ export function XPChart({ data = [] }) {
   if (!data.length) {
     return (
       <div className="flex h-[220px] items-center justify-center text-sm text-muted-foreground">
-        No XP data yet
+        No XP in this range
       </div>
     );
   }

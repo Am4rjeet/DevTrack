@@ -71,7 +71,7 @@ export default function GoalsPage() {
     <div className="space-y-6">
       <PageHeader
         title="Goals"
-        description="Set learning targets and track milestones"
+        description="Weekly targets for coding, DSA, or whatever you're working on"
         action={
           <Button onClick={() => setOpen(true)}>
             <Plus className="mr-2 h-4 w-4" />
@@ -92,7 +92,10 @@ export default function GoalsPage() {
         <LoadingSpinner className="py-12" />
       ) : goals.length === 0 ? (
         <Card>
-          <CardContent className="py-12 text-center text-muted-foreground">No goals found. Create one!</CardContent>
+          <CardContent className="flex flex-col items-center gap-3 py-12 text-center">
+            <p className="text-muted-foreground">No goals yet.</p>
+            <Button onClick={() => setOpen(true)}>Add a goal</Button>
+          </CardContent>
         </Card>
       ) : (
         <div className="grid gap-4 md:grid-cols-2">
@@ -168,7 +171,7 @@ export default function GoalsPage() {
         </div>
       )}
 
-      <Dialog open={open} onClose={() => setOpen(false)} title="New goal" description="Set a learning target">
+      <Dialog open={open} onClose={() => setOpen(false)} title="New goal" description="e.g. 10 hours of coding this week">
         <GoalForm onSubmit={(p) => createMutation.mutate(p)} loading={createMutation.isPending} />
       </Dialog>
     </div>

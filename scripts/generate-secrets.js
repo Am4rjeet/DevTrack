@@ -1,8 +1,5 @@
 #!/usr/bin/env node
-/**
- * Generate cryptographically secure secrets for DEVTRACK deployment.
- * Usage: node scripts/generate-secrets.js
- */
+// node scripts/generate-secrets.js
 import crypto from 'crypto';
 
 const secret = () => crypto.randomBytes(64).toString('hex');

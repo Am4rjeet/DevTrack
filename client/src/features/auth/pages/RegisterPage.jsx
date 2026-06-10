@@ -51,7 +51,7 @@ export default function RegisterPage() {
   };
 
   return (
-    <AuthLayout title="Create account" subtitle="Start tracking your developer journey">
+    <AuthLayout title="Create account" subtitle="You'll need to verify your email before logging in">
       <form onSubmit={handleSubmit} className="relative space-y-4">
         <BotProtectionFields
           honeypot={bot.honeypot}

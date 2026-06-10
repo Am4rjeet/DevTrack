@@ -2,6 +2,12 @@ import axios from 'axios';
 
 const baseURL = import.meta.env.VITE_API_URL || '/api/v1';
 
+export const getApiUrl = (path = '') => {
+  const base = baseURL.replace(/\/$/, '');
+  const suffix = path.startsWith('/') ? path : `/${path}`;
+  return `${base}${suffix}`;
+};
+
 let csrfToken = null;
 let isRefreshing = false;
 let refreshQueue = [];

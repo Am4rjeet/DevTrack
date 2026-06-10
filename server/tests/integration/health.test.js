@@ -18,7 +18,7 @@ describe('Health API', () => {
 
     expect(res.status).toBe(200);
     expect(res.body.success).toBe(true);
-    expect(res.body.message).toBe('DEVTRACK API');
+    expect(res.body.message).toBe('DevTrack API');
   });
 
   it('GET /api/v1/health should return health status', async () => {

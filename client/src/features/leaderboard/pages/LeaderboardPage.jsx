@@ -40,7 +40,7 @@ export default function LeaderboardPage() {
     <div className="space-y-6">
       <PageHeader
         title="Leaderboard"
-        description="Compete with developers worldwide"
+        description="Ranked by XP logged in the selected period"
         action={
           <Select value={period} onChange={(e) => setPeriod(e.target.value)} className="w-36">
             <option value="daily">Daily</option>
@@ -73,7 +73,7 @@ export default function LeaderboardPage() {
       ) : rankings.length === 0 ? (
         <Card>
           <CardContent className="py-12 text-center text-muted-foreground">
-            No rankings yet. Be the first to log activity!
+            Nobody on the board yet for this period.
           </CardContent>
         </Card>
       ) : (

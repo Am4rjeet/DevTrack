@@ -54,15 +54,12 @@ const emailService = {
 
     return sendEmail({
       to: user.email,
-      subject: 'Verify your DEVTRACK account',
-      text: `Welcome to DEVTRACK! Verify your email: ${verifyUrl}`,
+      subject: 'Verify your DevTrack email',
+      text: `Hi ${user.displayName || user.username},\n\nVerify your email: ${verifyUrl}\n\nLink expires in 24 hours.`,
       html: `
-        <h2>Welcome to DEVTRACK</h2>
         <p>Hi ${user.displayName || user.username},</p>
-        <p>Click the link below to verify your email address:</p>
-        <p><a href="${verifyUrl}">Verify Email</a></p>
-        <p>This link expires in 24 hours.</p>
-        <p>If you didn't create an account, ignore this email.</p>
+        <p><a href="${verifyUrl}">Verify your email</a></p>
+        <p>Expires in 24 hours. Ignore this if you didn't sign up.</p>
       `,
     });
   },
@@ -72,15 +69,12 @@ const emailService = {
 
     return sendEmail({
       to: user.email,
-      subject: 'Reset your DEVTRACK password',
-      text: `Reset your password: ${resetUrl}`,
+      subject: 'Reset your DevTrack password',
+      text: `Hi ${user.displayName || user.username},\n\nReset link: ${resetUrl}\n\nExpires in 1 hour.`,
       html: `
-        <h2>Password Reset</h2>
         <p>Hi ${user.displayName || user.username},</p>
-        <p>Click the link below to reset your password:</p>
-        <p><a href="${resetUrl}">Reset Password</a></p>
-        <p>This link expires in 1 hour.</p>
-        <p>If you didn't request this, ignore this email.</p>
+        <p><a href="${resetUrl}">Reset your password</a></p>
+        <p>Expires in 1 hour. Ignore this if you didn't ask for a reset.</p>
       `,
     });
   },

@@ -40,7 +40,7 @@ const envSchema = z.object({
   EMAIL_PORT: z.coerce.number().default(587),
   EMAIL_USER: z.string().optional().default(''),
   EMAIL_PASSWORD: z.string().optional().default(''),
-  EMAIL_FROM: z.string().optional().default('DEVTRACK <noreply@devtrack.app>'),
+  EMAIL_FROM: z.string().optional().default('DevTrack <noreply@devtrack.app>'),
 
   RATE_LIMIT_WINDOW_MS: z.coerce.number().default(900_000),
   RATE_LIMIT_MAX_REQUESTS: z.coerce.number().default(100),

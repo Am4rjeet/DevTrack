@@ -71,7 +71,7 @@ export const router = createBrowserRouter([
       { path: '/leaderboard', element: <LeaderboardPage /> },
       { path: '/github', element: <GitHubPage /> },
       { path: '/settings', element: <SettingsPage /> },
-      { path: '/settings/github', element: <SettingsPage /> },
+      { path: '/settings/github', element: <Navigate to="/github" replace /> },
       { path: '/profile/:username', element: <PublicProfilePage /> },
     ],
   },

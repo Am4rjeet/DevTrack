@@ -60,7 +60,7 @@ const githubService = {
     if (accessToken) {
       if (!isEncryptionConfigured()) {
         throw new AppError(
-          'Server encryption is not configured. Set ENCRYPTION_KEY in .env',
+          'GitHub connection is not available right now. Please try again later.',
           500,
           'ENCRYPTION_NOT_CONFIGURED'
         );
@@ -77,9 +77,6 @@ const githubService = {
     const user = await userRepository.findById(userId);
     if (user) {
       user.githubUsername = username;
-      if (!user.avatar && !accessToken) {
-        // Avatar set after first sync
-      }
       await userRepository.save(user);
     }
 
@@ -101,7 +98,7 @@ const githubService = {
 
     if (!token && !env.GITHUB_TOKEN) {
       throw new AppError(
-        'Add GITHUB_TOKEN to server .env or connect with a personal access token',
+        'Could not fetch GitHub data. Try connecting with GitHub sign-in instead.',
         503,
         'GITHUB_TOKEN_MISSING'
       );

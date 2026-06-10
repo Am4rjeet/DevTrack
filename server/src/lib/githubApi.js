@@ -48,7 +48,7 @@ const githubFetch = async (path, token = null) => {
 
   if (response.status === 403 && rateLimit.remaining === 0) {
     throw new GitHubApiError(
-      'GitHub API rate limit exceeded. Try again later or add GITHUB_TOKEN.',
+      'GitHub rate limit hit. Try again in a few minutes.',
       429,
       rateLimit
     );
