@@ -1,0 +1,17 @@
+process.env.NODE_ENV = 'test';
+process.env.PORT = '5001';
+process.env.MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/devtrack-test';
+process.env.JWT_ACCESS_SECRET = 'test-access-secret-minimum-32-characters-long';
+process.env.JWT_REFRESH_SECRET = 'test-refresh-secret-minimum-32-characters-long';
+process.env.CLIENT_URL = 'http://localhost:5173';
+process.env.CSRF_SECRET = 'test-csrf-secret-minimum-32-characters-long';
+process.env.COOKIE_SECURE = 'false';
+process.env.COOKIE_DOMAIN = 'localhost';
+process.env.ENCRYPTION_KEY = 'c5bd30063e017cf5007723104c5aef9d6b72db7f9a7a002e6c4ee20ea0dbfe72';
+process.env.GITHUB_TOKEN = process.env.GITHUB_TOKEN || '';
+process.env.GITHUB_CLIENT_ID = '';
+process.env.GITHUB_CLIENT_SECRET = '';
+process.env.GITHUB_OAUTH_CALLBACK_URL = 'http://localhost:5000/api/v1/github/oauth/callback';
+process.env.LEADERBOARD_CRON_ENABLED = 'false';
+process.env.REQUIRE_EMAIL_VERIFICATION = 'true';
+process.env.AUTO_VERIFY_EMAIL_IN_DEV = 'false';

@@ -1,0 +1,9 @@
+export default {
+  testEnvironment: 'node',
+  transform: {},
+  testMatch: ['**/tests/**/*.test.js'],
+  setupFiles: ['./tests/setup.js'],
+  verbose: true,
+  forceExit: true,
+  detectOpenHandles: true,
+};

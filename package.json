@@ -1,0 +1,28 @@
+{
+  "name": "devtrack",
+  "version": "1.0.0",
+  "private": true,
+  "description": "DEVTRACK – Developer Progress Tracker",
+  "scripts": {
+    "dev": "npm run dev --workspace=server",
+    "dev:server": "npm run dev --workspace=server",
+    "dev:client": "npm run dev --workspace=client",
+    "build": "npm run build --workspace=client",
+    "build:client": "npm run build --workspace=client",
+    "start": "npm run start --workspace=server",
+    "test": "npm run test --workspace=server && npm run test --workspace=client",
+    "test:server": "npm run test --workspace=server",
+    "test:client": "npm run test --workspace=client",
+    "install:all": "npm install && npm install --workspace=server"
+  },
+  "workspaces": [
+    "server",
+    "client"
+  ],
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "dependencies": {
+    "nodemailer": "^8.0.10"
+  }
+}
