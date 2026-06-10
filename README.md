@@ -1,46 +1,166 @@
-# DevTrack
+# DevTrack 🚀
 
-Side project I built to track my own coding sessions — hours logged, DSA problems, weekly goals, streaks, and a bit of XP/leaderboard stuff. GitHub stats pull in if you connect your account.
+A full-stack developer productivity platform built to help developers track progress, stay consistent, and showcase their growth.
 
-**Stack:** React + Vite, Express, MongoDB. Auth uses JWT in httpOnly cookies with CSRF.
+DevTrack combines coding activity tracking, goal management, GitHub integration, analytics, streaks, XP, and leaderboards into a single dashboard designed for developers.
 
-## Run locally
+## Features
 
-Needs Node 20+ and MongoDB (local or Atlas).
+* Secure Authentication (JWT + HttpOnly Cookies)
+* Email Verification
+* Forgot Password & Password Reset
+* GitHub OAuth Integration
+* GitHub Stats & Repository Insights
+* Progress Tracking
+* Goal Management
+* Developer Analytics Dashboard
+* XP & Gamification System
+* Streak Tracking
+* Public Developer Profiles
+* Leaderboards
+* CSRF Protection
+* Rate Limiting & Bot Protection
+
+## Tech Stack
+
+### Frontend
+
+* React
+* Vite
+* Tailwind CSS
+* TanStack Query
+* Recharts
+
+### Backend
+
+* Node.js
+* Express.js
+* MongoDB
+* Mongoose
+* JWT Authentication
+* Zod Validation
+* Nodemailer
+
+### Deployment
+
+* Vercel (Frontend)
+* Render (Backend)
+* MongoDB Atlas
+
+## Project Structure
+
+```bash
+client/     # Frontend Application
+server/     # Backend API
+scripts/    # Utility Scripts
+.github/    # CI/CD Workflows
+```
+
+## Getting Started
+
+### Clone Repository
+
+```bash
+git clone https://github.com/Am4rjeet/DevTrack.git
+cd DevTrack
+```
+
+### Install Dependencies
 
 ```bash
 npm install
-cp server/.env.example server/.env
-# fill in MONGODB_URI + secrets (or run: node scripts/generate-secrets.js)
-
-npm run dev:server   # :5000
-npm run dev:client   # :5173
 ```
 
-Vite proxies `/api` to the backend — no `VITE_API_URL` needed in dev.
+### Environment Setup
+
+Create:
+
+```bash
+server/.env
+```
+
+using:
+
+```bash
+server/.env.example
+```
+
+### Start Development Server
+
+Backend:
+
+```bash
+npm run dev:server
+```
+
+Frontend:
+
+```bash
+npm run dev:client
+```
+
+## Environment Variables
+
+Required:
+
+```env
+MONGODB_URI=
+JWT_ACCESS_SECRET=
+JWT_REFRESH_SECRET=
+CSRF_SECRET=
+CLIENT_URL=
+ENCRYPTION_KEY=
+```
+
+Optional:
+
+```env
+EMAIL_USER=
+EMAIL_PASSWORD=
+
+GITHUB_CLIENT_ID=
+GITHUB_CLIENT_SECRET=
+GITHUB_TOKEN=
+```
+
+## Testing
 
 ```bash
 npm test
+npm run test:server
+npm run test:client
 ```
 
-## Deploy
+## Deployment
 
-Frontend on **Vercel** (`client` as root), API on **Render** (`render.yaml` in repo root).
+### Frontend
 
-| Where | Variable | Notes |
-|-------|----------|-------|
-| Render | `MONGODB_URI` | Atlas connection string |
-| Render | `CLIENT_URL` | Your Vercel URL, no trailing slash |
-| Render | `COOKIE_SECURE` | `true` |
-| Render | `JWT_*`, `CSRF_SECRET`, `ENCRYPTION_KEY` | `node scripts/generate-secrets.js` |
-| Vercel | `VITE_API_URL` | `https://<api-host>/api/v1` |
+Deploy on Vercel
 
-After first deploy, set Render `CLIENT_URL` to the real Vercel URL and redeploy the API.
+### Backend
 
-GitHub OAuth is optional — see `server/.env.example` for `GITHUB_CLIENT_ID`, `GITHUB_CLIENT_SECRET`, `GITHUB_OAUTH_CALLBACK_URL`.
+Deploy on Render
 
-## API routes
+### Database
 
-`/api/v1/auth` · `/progress` · `/goals` · `/analytics` · `/dashboard` · `/leaderboard` · `/github` · `/users/:username`
+MongoDB Atlas
 
-Env reference: `server/.env.example`, `client/.env.example`
+## Screenshots
+
+Add screenshots here after deployment.
+
+## Future Improvements
+
+* AI Learning Insights
+* Coding Streak Predictions
+* Team Workspaces
+* Project Portfolio Integration
+* Advanced Analytics
+
+## Author
+
+Amarjeet
+
+## License
+
+This project is available for educational and portfolio purposes.
